@@ -1,0 +1,21 @@
+.visor {
+    margin: 1rem 1rem;
+    height: 10vh;
+    width: calc(100% - 2rem);
+    display: inline-flex;
+}
+
+#visor__result {
+    border: .25rem solid #909090;
+    border-radius: 1rem;
+    background-color: #8E8E8E;
+    width: 89%;
+    height: 100%;
+    color: #3A3A3A;
+    align-self: center;
+    font-size: 3rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+}
