@@ -22,56 +22,86 @@ for (let i = 0; i < bts.length; i++) {
         if (operations.includes(selector)) {
 
             switch(selector) {
+                /*
+                    "Para operações matemáticas":
+                    Caso já tenha definido uma operação antes, não permitirá adicionar outra
+                    Senão...
+                        Se não houver algum caractere matemático no visor...
+                        ... adiciona o operador matemático
+                        senão... substitui o operador que já está no visor
+                */ 
                 case "+":
-                    if (!verify) {
-                        visor.innerText += "+";
-                    }
+                    if (operacao) return;
                     else {
-                        visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "+"
+                        if (!verify) {
+                            visor.innerText += "+";
+                        }
+                        else {
+                            visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "+"
+                        }
                     }
                     break;
                 case "-":
-                    if (!verify) {
-                        visor.innerText += "-";
-                    }
+                    if (operacao) return;
                     else {
-                        visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "-"
+                        if (!verify) {
+                            visor.innerText += "-";
+                        }
+                        else {
+                            visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "-"
+                        }
                     }
                     break;
                 case "*":
-                    if (!verify) {
-                        visor.innerText += "*";
-                    }
+                    if (operacao) return;
                     else {
-                        visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "*"
+                        if (!verify) {
+                            visor.innerText += "*";
+                        }
+                        else {
+                            visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "*"
+                        }
                     }
                     break;
                 case "/":
-                    if (!verify) {
-                        visor.innerText += "/";
-                    }
+                    if (operacao) return;
                     else {
-                        visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "/"
+                        if (!verify) {
+                            visor.innerText += "/";
+                        }
+                        else {
+                            visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "/"
+                        }
                     }
                     break;
                 case "=":
-                    console.log(valor1, valor2)
-                    if (!valor1) return;
-                    else {
-                        valor2 = visor.innerText;
-                        console.log(valor1, valor2, operacao)
+                    // caso tenha uma operação clicada, efetua a operação clicada e limpa as variáveis
+                    if (operacao) {
+                        valor2 = Number(visor.innerText);
                         switch(operacao) {
                             case "+":
-                                visor.innerText = soma(valor1, valor2);
+                                visor.innerText = valor1 + valor2;
+                                valor1 = null;
+                                valor2 = null;
+                                operacao = null;
                                 break;
                             case "-":
-                                visor.innerText = subtracao(valor1, valor2);
+                                visor.innerText = valor1 - valor2;
+                                valor1 = null;
+                                valor2 = null;
+                                operacao = null;
                                 break;
                             case "*":
-                                visor.innerText = multiplicacao(valor1, valor2);
+                                visor.innerText = valor1 * valor2;
+                                valor1 = null;
+                                valor2 = null;
+                                operacao = null;
                                 break;
                             case "/":
-                                visor.innerText = divisao(valor1, valor2);
+                                visor.innerText = valor1 / valor2;
+                                valor1 = null;
+                                valor2 = null;
+                                operacao = null;
                                 break;
                             default:
                                 return;
@@ -81,7 +111,10 @@ for (let i = 0; i < bts.length; i++) {
                 case ".":
                     break;
                 case "C":
-                    // Limpa o visor
+                    // Limpa as variáveis e o visor
+                    valor1 = null;
+                    valor2 = null;
+                    operacao = null;
                     visor.innerText = 0;
                     break;
                 default:
@@ -93,7 +126,7 @@ for (let i = 0; i < bts.length; i++) {
                 
                 if (!valor1) {
                     operacao = visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length);
-                    valor1 = visor.innerText.slice(0, visor.innerText.length - 1)
+                    valor1 = Number(visor.innerText.slice(0, visor.innerText.length - 1));
                     visor.innerText = selector;
                 }
             }
@@ -106,5 +139,3 @@ for (let i = 0; i < bts.length; i++) {
         }
     })
 }
-
-export default { visor };
