@@ -1,4 +1,7 @@
 import soma from "./soma.js";
+import subtracao from "./sub.js";
+import multiplicacao from "./mult.js";
+import divisao from "./div.js";
 
 const bts = document.querySelectorAll(".button");
 const visor = document.querySelector('#visor__result');
@@ -52,17 +55,23 @@ for (let i = 0; i < bts.length; i++) {
                     }
                     break;
                 case "=":
+                    console.log(valor1, valor2)
                     if (!valor1) return;
                     else {
                         valor2 = visor.innerText;
+                        console.log(valor1, valor2, operacao)
                         switch(operacao) {
                             case "+":
+                                visor.innerText = soma(valor1, valor2);
                                 break;
                             case "-":
+                                visor.innerText = subtracao(valor1, valor2);
                                 break;
                             case "*":
+                                visor.innerText = multiplicacao(valor1, valor2);
                                 break;
                             case "/":
+                                visor.innerText = divisao(valor1, valor2);
                                 break;
                             default:
                                 return;
