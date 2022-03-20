@@ -6,7 +6,7 @@
 }
 
 #visor__result {
-    border: .25rem solid #909090;
+    border: .5rem solid #909090;
     border-radius: 1rem;
     background-color: #8E8E8E;
     width: 89%;
@@ -19,4 +19,5 @@
     justify-content: flex-end;
     align-items: center;
     padding-right: 1rem;
+    padding-left: 1rem;
 }
