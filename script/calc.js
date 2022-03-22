@@ -68,7 +68,7 @@ for (let i = 0; i < bts.length; i++) {
 
                 case "+":
                     // Adiciona ou substitui + (operador soma) no visor apenas uma vez
-                    if (operacao) return;
+                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
                     else {
                         if (negativo) {
                             if (ultimoChar) {
@@ -90,7 +90,7 @@ for (let i = 0; i < bts.length; i++) {
 
                 case "-":
                     // Adiciona ou substitui - (operador subtração) no visor apenas uma vez
-                    if (operacao) return;
+                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
                     else {
                         if (negativo) {
                             if (ultimoChar) {
@@ -112,7 +112,7 @@ for (let i = 0; i < bts.length; i++) {
 
                 case "*":
                     // Adiciona ou substitui * (operador multiplicação) no visor apenas uma vez
-                    if (operacao) return;
+                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
                     else {
                         if (negativo) {
                             if (ultimoChar) {
@@ -134,7 +134,7 @@ for (let i = 0; i < bts.length; i++) {
 
                 case "/":
                     // Adiciona ou substitui / (operador divisão) no visor apenas uma vez
-                    if (operacao) return;
+                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
                     else {
                         if (negativo) {
                             if (ultimoChar) {
