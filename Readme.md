@@ -6,6 +6,10 @@
 * Prevent several ways to type invalid inputs
 * Allow working with negative numbers
 * Clear function
+<hr>
+
+* Code refactored for long expressions, giving a better understanding
+* Allow continuing calcs with last result
 
 <br />
 

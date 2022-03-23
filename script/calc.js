@@ -6,6 +6,7 @@ let operacao = null;
 let valor1 = null;
 let valor2 = null;
 let temp = null;
+let novoCalc = true;
 
 function zerarVariaveis() {
     operacao = null;
@@ -19,6 +20,9 @@ for (let i = 0; i < bts.length; i++) {
     bts[i].addEventListener('click', () => {
         let selector = bts[i].innerText;
 
+        const firstChar = visor.innerText.slice(0, visor.innerText.length - 1);
+        const lastChar = visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length);
+
         // variavel verify retorna se algum dos operadores matemáticos já foi clicado
         let verify = 
             visor.innerText.includes("+") ||
@@ -27,16 +31,16 @@ for (let i = 0; i < bts.length; i++) {
             visor.innerText.includes("/");
         
         // variável para verificar caractere para operador matemático no final
-        const ultimoChar = 
-            visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "-" || 
-            visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "*" || 
-            visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "+" || 
-            visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "/";
+        const ultimoCharOperador = 
+            lastChar == "-" || 
+            lastChar == "*" || 
+            lastChar == "+" || 
+            lastChar == "/";
 
         // variável para identificar número negativo
         const negativo =  
             visor.innerText.slice(0, 1) == "-" &&
-            !ultimoChar && 
+            !ultimoCharOperador && 
             visor.innerText.length >= 2;
 
         // Se clicado um botão que não seja número, faz as ações do if
@@ -68,10 +72,10 @@ for (let i = 0; i < bts.length; i++) {
 
                 case "+":
                     // Adiciona ou substitui + (operador soma) no visor apenas uma vez
-                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
+                    if (lastChar == ".") return;
                     else {
                         if (negativo) {
-                            if (ultimoChar) {
+                            if (ultimoCharOperador) {
                                 return;
                             }
                             else visor.innerText += "+";
@@ -80,20 +84,19 @@ for (let i = 0; i < bts.length; i++) {
                             visor.innerText += "+";
                         }
                         else {
-                            if (ultimoChar && visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "+") {
-                                    return;
+                            if (ultimoCharOperador) {
+                                visor.innerText = firstChar + "+";
                             }
-                            else visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "+";
                         }
                     }
                     break;
 
                 case "-":
                     // Adiciona ou substitui - (operador subtração) no visor apenas uma vez
-                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
+                    if (lastChar == ".") return;
                     else {
                         if (negativo) {
-                            if (ultimoChar) {
+                            if (ultimoCharOperador) {
                                     return;
                             }
                             else visor.innerText += "-";
@@ -102,20 +105,19 @@ for (let i = 0; i < bts.length; i++) {
                             visor.innerText += "-";
                         }
                         else {
-                            if (ultimoChar && visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "-") {
-                                    return;
+                            if (ultimoCharOperador) {
+                                visor.innerText = firstChar + "-";    
                             }
-                            else visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "-";
                         }
                     }
                     break;
 
                 case "*":
                     // Adiciona ou substitui * (operador multiplicação) no visor apenas uma vez
-                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
+                    if (lastChar == ".") return;
                     else {
                         if (negativo) {
-                            if (ultimoChar) {
+                            if (ultimoCharOperador) {
                                     return;
                             }
                             else visor.innerText += "*";
@@ -124,20 +126,19 @@ for (let i = 0; i < bts.length; i++) {
                             visor.innerText += "*";
                         }
                         else {
-                            if (ultimoChar && visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "*") {
-                                    return;
+                            if (ultimoCharOperador) {
+                                visor.innerText = firstChar + "*";    
                             }
-                            else visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "*";
                         }
                     }
                     break;
 
                 case "/":
                     // Adiciona ou substitui / (operador divisão) no visor apenas uma vez
-                    if (operacao || visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == ".") return;
+                    if (lastChar == ".") return;
                     else {
                         if (negativo) {
-                            if (ultimoChar) {
+                            if (ultimoCharOperador) {
                                 return;
                             }
                             else visor.innerText += "/";
@@ -146,10 +147,9 @@ for (let i = 0; i < bts.length; i++) {
                             visor.innerText += "/";
                         }
                         else {
-                            if (ultimoChar && visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length) == "/") {
-                                   return;
+                            if (ultimoCharOperador) {
+                                visor.innerText = firstChar + "/";   
                             }
-                            else visor.innerText = visor.innerText.slice(0, visor.innerText.length - 1) + "/";
                         }
                     }
                     break;
@@ -167,15 +167,23 @@ for (let i = 0; i < bts.length; i++) {
                         switch(operacao) {
                             case "+":
                                 visor.innerText = valor1 + valor2;
+                                zerarVariaveis();
+                                novoCalc = true;
                                 break;
                             case "-":
                                 visor.innerText = valor1 - valor2;
+                                zerarVariaveis();
+                                novoCalc = true;
                                 break;
                             case "*":
                                 visor.innerText = valor1 * valor2;
+                                zerarVariaveis();
+                                novoCalc = true;
                                 break;
                             case "/":
                                 visor.innerText = valor1 / valor2;
+                                zerarVariaveis();
+                                novoCalc = true;
                                 break;
                             default:
                                 return;
@@ -186,8 +194,10 @@ for (let i = 0; i < bts.length; i++) {
                 case ".":
                     // Adicionar ponto, prevenindo de ser adicionado duas vezes
                     if (visor.innerText.includes(".")) return;
+                    else if (ultimoCharOperador) return;
                     else if (visor.innerText == "0" || visor.innerText == "0.") visor.innerText += ".";
                     else visor.innerText += ".";
+                    novoCalc = false;
                     break;
 
                 case "C":
@@ -208,18 +218,12 @@ for (let i = 0; i < bts.length; i++) {
                 visor.innerText = selector;
             }
 
-            // caso tenha finalizado um calculo com sucesso, zera as variáveis pra um calculo novo
-            else if (valor2) {
-                zerarVariaveis();
-                visor.innerText = selector;
-            }
-
             // caso tenha selecionado algum operador matemático
             else if (verify) {
-                if (ultimoChar && visor.innerText.slice(0, 1) == "-" && visor.innerText.length > 1) {
+                if (ultimoCharOperador && visor.innerText.slice(0, 1) == "-" && visor.innerText.length > 1) {
                     if (!valor1) {
-                        operacao = visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length);
-                        valor1 = temp ? "Err" : Number(visor.innerText.slice(0, visor.innerText.length - 1));
+                        operacao = lastChar;
+                        valor1 = temp ? "Err" : Number(firstChar);
                         visor.innerText = (valor1 != "Err") ? selector : valor1;
                     }
                 }
@@ -228,14 +232,20 @@ for (let i = 0; i < bts.length; i++) {
                 }
 
                 else if (!valor1) {
-                    operacao = visor.innerText.slice(visor.innerText.length - 1, visor.innerText.length);
-                    valor1 = temp ? "Err" : Number(visor.innerText.slice(0, visor.innerText.length - 1));
+                    operacao = lastChar;
+                    valor1 = temp ? "Err" : Number(firstChar);
                     visor.innerText = (valor1 != "Err") ? selector : valor1;
+                }
+
+                else {
+                    operacao = lastChar;
+                    valor2 = temp ? "Err" : Number(firstChar);
+                    visor.innerText = (valor2 != "Err") ? selector : valor2;
                 }
             }
 
             // caso já haja um número, se zero, retira o zero e adiciona o número clicado
-            else if (visor.innerText != "0") {
+            else if (visor.innerText != "0" && !novoCalc) {
                 // Caso seja número grande além do display, senão adiciona o número clicado
                 if (visorDisplay.offsetWidth <= (visor.offsetWidth + (58 * 2))) {
                     let calc = Math.round(visorDisplay.offsetWidth / 29) - 4;
@@ -244,12 +254,15 @@ for (let i = 0; i < bts.length; i++) {
                         visor.innerText = "..." + temp.slice(temp.length - calc, temp.length);
                     }
                 }
-                else visor.innerText += selector;
+                else {
+                    visor.innerText += selector;
+                }
             }
 
             // quando iniciado ou limpado com a tecla "C"
             else {
                 visor.innerText = selector;
+                novoCalc = false;
             }
         }
     });
